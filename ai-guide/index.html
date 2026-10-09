@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="12 דברים לנסות עם AI">
+<meta property="og:description" content="מדריך למשתתפי ההרצאה של גיא אבו: מה עושים, מה כותבים, ומה חשוב לדעת">
+<title>12 דברים לנסות עם AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=Heebo:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: one readable phone-first column; a ranked list of practice cards, each with steps and a copyable request */
+:root {
+  --bg: #FBF6EC; --surface: #FFFFFF; --ink: #1F2A44; --muted: #55607A;
+  --accent: #C2621B; --gold: #B8860B; --line: #E8DFCF; --prompt: #FFF1DE; --warn-bg: #FDECEC; --warn: #9B2C2C;
+  --navy: #111B33; --on-navy: #FBF6EC;
+  --display: 'Frank Ruhl Libre', 'David', Georgia, serif;
+  --body: 'Heebo', 'Arial Hebrew', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0F1729; --surface: #18233D; --ink: #F3EEE4; --muted: #AEB8CC;
+  --accent: #F2994A; --gold: #F2C94C; --line: #2A3755; --prompt: #2A2A33; --warn-bg: #3A1F27; --warn: #FFB4B4;
+  --navy: #1F2A44; --on-navy: #FBF6EC; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0F1729; --surface: #18233D; --ink: #F3EEE4; --muted: #AEB8CC;
+  --accent: #F2994A; --gold: #F2C94C; --line: #2A3755; --prompt: #2A2A33; --warn-bg: #3A1F27; --warn: #FFB4B4;
+  --navy: #1F2A44; --on-navy: #FBF6EC; color-scheme: dark }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 19px; line-height: 1.6; direction: rtl; }
+.wrap { max-width: 760px; margin: 0 auto; padding-inline: 18px; padding-block: 28px 56px; display: flex; flex-direction: column; gap: 28px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; line-height: 1.2; margin: 0; }
+p { margin: 0; }
+header { display: flex; flex-direction: column; gap: 10px; padding-block: 8px 4px; }
+.eyebrow { font-weight: 800; color: var(--accent); font-size: 16px; letter-spacing: .04em; }
+header h1 { font-size: clamp(34px, 8vw, 52px); font-weight: 900; }
+header .lead { font-size: 20px; color: var(--muted); max-width: 60ch; }
+.panel { background: var(--navy); color: var(--on-navy); border-radius: 22px; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+.panel h2 { font-size: 28px; color: var(--on-navy); }
+.panel ol { margin: 0; padding-inline-start: 1.3em; display: flex; flex-direction: column; gap: 8px; }
+.panel .note { font-size: 17px; opacity: .85; }
+.list { display: flex; flex-direction: column; gap: 18px; }
+.list-head { display: flex; flex-direction: column; gap: 4px; }
+.list-head h2 { font-size: 30px; }
+.list-head p { color: var(--muted); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.card-top { display: flex; gap: 14px; align-items: flex-start; }
+.rank { flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 800; font-size: 20px; display: flex; align-items: center; justify-content: center; font-variant-numeric: tabular-nums; }
+.card-top div { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.card h3 { font-size: 26px; font-weight: 900; }
+.why { color: var(--muted); font-size: 17px; }
+.steps { margin: 0; padding-inline-start: 1.3em; display: flex; flex-direction: column; gap: 6px; }
+.prompt { background: var(--prompt); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.prompt .label { font-size: 15px; font-weight: 800; color: var(--accent); }
+.prompt .text { font-weight: 500; font-size: 19px; }
+.copy { align-self: flex-start; font: inherit; font-size: 16px; font-weight: 700; background: var(--accent); color: #fff; border: 0; border-radius: 999px; padding: 8px 18px; cursor: pointer; }
+.copy:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.tip { font-size: 17px; color: var(--muted); }
+.tip b { color: var(--ink); }
+.warn { background: var(--warn-bg); color: var(--warn); border-radius: 12px; padding: 10px 14px; font-size: 17px; }
+.rules { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.rule { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; min-width: 0; }
+.rule b { display: block; font-size: 19px; margin-bottom: 4px; }
+.rule span { color: var(--muted); font-size: 17px; }
+.formula { font-family: var(--display); font-size: 24px; font-weight: 900; text-align: center; padding: 18px; border: 2px dashed var(--gold); border-radius: 18px; }
+footer { text-align: center; color: var(--muted); font-size: 16px; padding-top: 8px; }
+footer b { color: var(--ink); }
+@media (max-width: 520px) { .rules { grid-template-columns: 1fr; } .card { padding: 18px; } }
+@media (prefers-reduced-motion: no-preference) { .copy { transition: transform .1s; } .copy:active { transform: scale(.96); } }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">בינה מלאכותית בגובה העיניים · גיא אבו</span>
+    <h1>12 דברים לנסות עם AI</h1>
+    <p class="lead">מדורגים לפי כמה הם שימושיים ומלהיבים. לכל אחד: מה עושים, מה כותבים (אפשר להעתיק), ומה חשוב לדעת.</p>
+  </header>
+
+  <section class="panel" aria-labelledby="start">
+    <h2 id="start">איך מתחילים</h2>
+    <ol>
+      <li>מורידים את האפליקציה <b>ChatGPT</b> מחנות האפליקציות. החינמית מספיקה. שימו לב שהמפתחת היא <b>OpenAI</b>, יש גם אפליקציות מזויפות.</li>
+      <li>נכנסים עם חשבון הגוגל שלכם (ג׳ימייל).</li>
+      <li>כותבים בתיבה למטה, או לוחצים על <b>המיקרופון</b> ומדברים.</li>
+      <li>תשובה לא מתאימה? לא מתחילים מחדש. פשוט אומרים לו מה לשנות.</li>
+    </ol>
+    <p class="note">פרטיות: בהגדרות, תחת "בקרת נתונים", אפשר לבטל את השימוש בשיחות שלכם לאימון המודל. בגרסה החינמית יש מכסה שבועית ליצירת תמונות.</p>
+  </section>
+
+  <section class="list" aria-labelledby="ideas">
+    <div class="list-head">
+      <h2 id="ideas">הרשימה</h2>
+      <p>את הטקסטים המודגשים אפשר להעתיק ולהדביק. החליפו את הפרטים בשלכם.</p>
+    </div>
+
+    <article class="card">
+      <div class="card-top"><span class="rank">1</span><div><h3>תמונה ישנה כחדשה</h3><p class="why">מחזירים לחיים תמונה מהאלבום המשפחתי.</p></div></div>
+      <ol class="steps">
+        <li>מצלמים את התמונה הישנה בטלפון: ישר מלמעלה, באור יום, בלי השתקפות.</li>
+        <li>בצ׳אט לוחצים על <b>+</b> ובוחרים את התמונה.</li>
+        <li>כותבים את הבקשה ושולחים. לוקח כדקה.</li>
+      </ol>
+      <div class="prompt"><span class="label">מה לכתוב</span><p class="text">שחזר את התמונה הישנה הזאת: תקן קרעים, כתמים ושריטות, חדד אותה ותן לה צבעים טבעיים. אל תשנה את תווי הפנים.</p><button class="copy" type="button">העתקה</button></div>
+      <p class="tip"><b>חשוב לדעת:</b> ה־AI "מנחש" צבעים ופרטים, והתוצאה לא תמיד מדויקת. שמרו תמיד את התמונה המקורית.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><span class="rank">2</span><div><h3>"זה עוקץ?"</h3><p class="why">בודקים הודעה חשודה לפני שעושים משהו.</p></div></div>
+      <ol class="steps">
+        <li>לחיצה ארוכה על ההודעה החשודה ← <b>העתק</b>.</li>
+        <li>בצ׳אט: מדביקים את ההודעה, ומתחתיה כותבים את הבקשה.</li>
+      </ol>
+      <div class="prompt"><span class="label">מה לכתוב</span><p class="text">קיבלתי את ההודעה הזאת. האם היא נראית כמו ניסיון הונאה? מה הסימנים, ומה כדאי לי לעשות?</p><button class="copy" type="button">העתקה</button></div>
+      <p class="warn">לא לוחצים על הקישור שבהודעה. גם אם הצ׳אט אומר שהכול בסדר, מתקשרים לגוף עצמו במספר שאתם מכירים.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><span class="rank">3</span><div><h3>צלמו ותבינו</h3><p class="why">מכתב מהבנק, טופס, עלון תרופה או תפריט בחו״ל.</p></div></div>
+      <ol class="steps">
+        <li>מצלמים את המסמך.</li>
+        <li>בצ׳אט לוחצים על <b>+</b>, בוחרים את התמונה וכותבים את הבקשה.</li>
+      </ol>
+      <div class="prompt"><span class="label">מה לכתוב</span><p class="text">תסביר לי בשפה פשוטה מה כתוב כאן. האם אני צריך לעשות משהו, ועד מתי?</p><button class="copy" type="button">העתקה</button></div>
+      <p class="warn">לפני הצילום כסו מספר תעודת זהות, מספר חשבון וכרטיס אשראי. על תרופות: מתייעצים גם עם הרוקח.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><span class="rank">4</span><div><h3>מדברים במקום להקליד</h3><p class="why">הכי נוח למי שלא אוהב להקליד בטלפון.</p></div></div>
+      <ol class="steps">
+        <li>לוחצים על <b>המיקרופון</b> כדי להכתיב, או על סמל <b>גלי הקול</b> לשיחה קולית מלאה.</li>
+        <li>מדברים רגיל, בעברית. אפשר לקטוע אותו באמצע ולשאול שוב.</li>
+      </ol>
+      <div class="prompt"><span class="label">מה להגיד</span><p class="text">שלום, אני רוצה ללמוד להשתמש בך. תסביר לי לאט ובקצרה מה אתה יודע לעשות בשבילי.</p><button class="copy" type="button">העתקה</button></div>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><span class="rank">5</span><div><h3>טיול לחו״ל</h3><p class="why">מסלול מותאם בדיוק לקצב שלכם.</p></div></div>
+      <ol class="steps">
+        <li>מספרים מי אתם, לאן, כמה ימים, מה אוהבים ומה לא.</li>
+        <li>ממשיכים לשפר: "יום 2 עמוס מדי", "תוסיף מסעדה כשרה", "תכין רשימת ציוד".</li>
+      </ol>
+      <div class="prompt"><span class="label">מה לכתוב</span><p class="text">אנחנו זוג בני 68, טסים לפראג ל־5 ימים בספטמבר. אנחנו אוהבים מוזיאונים, אוכל טוב ומוזיקה, ולא רוצים הרבה הליכה. תכנן לנו מסלול יום אחר יום, עם הפסקות מנוחה.</p><button class="copy" type="button">העתקה</button></div>
+      <p class="tip"><b>חשוב לדעת:</b> שעות פתיחה ומחירים בודקים באתר הרשמי לפני שיוצאים.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><span class="rank">6</span><div><h3>סיפור החיים שלי</h3><p class="why">ספר זיכרונות לנכדים, בלי לכתוב מילה.</p></div></div>
+      <ol class="steps">
+        <li>שולחים את הבקשה, והצ׳אט מתחיל לראיין אתכם.</li>
+        <li>עונים בקול דרך המיקרופון, שאלה אחרי שאלה. אפשר להמשיך בכמה ערבים.</li>
+        <li>בסוף מבקשים: "סדר את כל מה שסיפרתי לפרקים".</li>
+      </ol>
+      <div class="prompt"><span class="label">מה לכתוב</span><p class="text">אני רוצה לכתוב את סיפור החיים שלי לנכדים. תראיין אותי: שאל שאלה אחת בכל פעם, על הילדות, הצבא, המשפחה והעבודה. בסוף תסדר הכל לפרקים, בשפה חמה ופשוטה.</p><button class="copy" type="button">העתקה</button></div>
+      <p class="tip"><b>טיפ:</b> מעתיקים את הטקסט הסופי למסמך ושומרים. אפשר להדפיס ולכרוך.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><span class="rank">7</span><div><h3>ברכה או שיר אישי</h3><p class="why">ליום הולדת, לחתונה, לפרידה מחבר.</p></div></div>
+      <ol class="steps">
+        <li>נותנים כמה פרטים אישיים: שם, גיל, תחביבים, כינויים.</li>
+        <li>לא מרוצים? "תעשה אותו מצחיק יותר" או "קצר יותר".</li>
+      </ol>
+      <div class="prompt"><span class="label">מה לכתוב</span><p class="text">כתוב שיר קצר ומצחיק ליום ההולדת ה־8 של הנכדה שלי נועה. היא אוהבת סוסים וציור, וקוראת לי "סבא גיגי". ארבעה בתים, מתאים להקראה בקול.</p><button class="copy" type="button">העתקה</button></div>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><span class="rank">8</span><div><h3>הכנה לביקור אצל רופא</h3><p class="why">מגיעים לתור עם השאלות הנכונות.</p></div></div>
+      <ol class="steps">
+        <li>מתארים בקצרה למה הולכים לרופא.</li>
+        <li>מבקשים רשימת שאלות, ושומרים אותה בטלפון לתור.</li>
+      </ol>
+      <div class="prompt"><span class="label">מה לכתוב</span><p class="text">יש לי תור לרופא עיניים בשבוע הבא בגלל ראייה מטושטשת. אילו שאלות כדאי לי לשאול אותו? תן לי רשימה קצרה.</p><button class="copy" type="button">העתקה</button></div>
+      <p class="warn">הצ׳אט לא מחליף רופא. לא מתחילים או מפסיקים טיפול לפי מה שהוא אומר.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><span class="rank">9</span><div><h3>עזרה עם הטלפון</h3><p class="why">"איך עושים את זה?" בלי לחכות לנכדים.</p></div></div>
+      <ol class="steps">
+        <li>מצלמים את המסך (צילום מסך). ברוב הטלפונים: לחיצה בו־זמנית על כפתור הצד וכפתור הווליום.</li>
+        <li>בצ׳אט לוחצים על <b>+</b>, בוחרים את צילום המסך וכותבים מה רוצים לעשות.</li>
+      </ol>
+      <div class="prompt"><span class="label">מה לכתוב</span><p class="text">זה המסך בטלפון שלי. איך אני מגדיל את האותיות? תסביר צעד אחרי צעד, לאט.</p><button class="copy" type="button">העתקה</button></div>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><span class="rank">10</span><div><h3>"מה זה?"</h3><p class="why">צמח בגינה, ציפור, חפץ ישן מהבוידעם.</p></div></div>
+      <ol class="steps">
+        <li>מצלמים מקרוב ובאור טוב.</li>
+        <li>שולחים את התמונה עם שאלה.</li>
+      </ol>
+      <div class="prompt"><span class="label">מה לכתוב</span><p class="text">מה הצמח הזה? איך מטפלים בו, והאם הוא בטוח לחתולים?</p><button class="copy" type="button">העתקה</button></div>
+      <p class="warn">לעולם לא אוכלים צמח או פטרייה לפי זיהוי של AI.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><span class="rank">11</span><div><h3>אני, בגיל 25</h3><p class="why">מסע בזמן משעשע, עם תמונה שלכם.</p></div></div>
+      <ol class="steps">
+        <li>מעלים תמונה ברורה של עצמכם, מלפנים.</li>
+        <li>מבקשים גיל וסגנון. אפשר גם "איך אראה בעוד 20 שנה".</li>
+      </ol>
+      <div class="prompt"><span class="label">מה לכתוב</span><p class="text">צור תמונה שלי כפי שהייתי נראה בגיל 25, בסגנון תמונה ישנה משנות ה־70.</p><button class="copy" type="button">העתקה</button></div>
+      <p class="warn">משתמשים רק בתמונות של עצמכם. תמונות של אחרים, ובמיוחד של ילדים ונכדים, רק באישור ההורים.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><span class="rank">12</span><div><h3>מה מבשלים היום?</h3><p class="why">מתכון ממה שכבר יש בבית.</p></div></div>
+      <ol class="steps">
+        <li>כותבים מה יש במקרר, או פשוט מצלמים אותו.</li>
+        <li>מוסיפים מגבלות: אין תנור, מישהו לא אוכל עגבניות, משהו קל.</li>
+      </ol>
+      <div class="prompt"><span class="label">מה לכתוב</span><p class="text">יש לי במקרר קישואים, ביצים, גבינה לבנה ועגבניות. מה אפשר להכין לארוחת ערב לשניים, בלי תנור?</p><button class="copy" type="button">העתקה</button></div>
+    </article>
+  </section>
+
+  <section class="list" aria-labelledby="formula">
+    <div class="list-head"><h2 id="formula">הנוסחה לתשובה טובה</h2></div>
+    <p class="formula">מה אני רוצה + קצת הקשר + מה חשוב לי</p>
+  </section>
+
+  <section class="list" aria-labelledby="rules">
+    <div class="list-head"><h2 id="rules">ארבעה כללי זהירות</h2></div>
+    <div class="rules">
+      <div class="rule"><b>הוא יכול לטעות בביטחון</b><span>משהו חשוב? בודקים במקור נוסף.</span></div>
+      <div class="rule"><b>לא מכניסים מידע רגיש</b><span>סיסמאות, כרטיסי אשראי ותעודת זהות נשארים בחוץ.</span></div>
+      <div class="rule"><b>קול ותמונה אינם הוכחה</b><span>"הנכד ביקש כסף"? מתקשרים אליו בחזרה, במספר שאתם מכירים.</span></div>
+      <div class="rule"><b>דחיפות היא נורת אזהרה</b><span>"עכשיו", "מיד", "אל תספרו לאף אחד" – עוצרים ובודקים.</span></div>
+    </div>
+  </section>
+
+  <footer><b>גיא אבו</b> · מוביל AI בהייטק · מוביל קהילת AI<br>חיפה · 9 באוקטובר 2026</footer>
+</div>
+
+<script>
+document.querySelectorAll('.copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var text = btn.parentElement.querySelector('.text');
+    var done = function () { btn.textContent = 'הועתק ✓'; setTimeout(function () { btn.textContent = 'העתקה'; }, 1800); };
+    var fallback = function () {
+      var r = document.createRange(); r.selectNodeContents(text);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'סומן – לחצו "העתק"';
+    };
+    try {
+      navigator.clipboard.writeText(text.textContent.trim()).then(done, fallback);
+    } catch (e) { fallback(); }
+  });
+});
+</script>
+
+</body>
+</html>
